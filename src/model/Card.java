@@ -12,18 +12,19 @@ public abstract class Card {
 
   //TODO: add cvv code, password
 
-  private Boolean isValid;
+  private Boolean isOurBank;
   private Double balance;
 
   private List<Transaction> transactions;
 
-  public Card(String cardNumber, Client owner, Boolean isValid, Double balance, List<Transaction> transactions) {
+  public Card(String cardNumber, Client owner, Boolean isOurBank, Double balance) {
     this.cardNumber = cardNumber;
     this.owner = owner;
-    this.isValid = isValid;
+    this.isOurBank = isOurBank;
     this.balance = balance;
-    this.transactions = transactions;
+    this.transactions = new ArrayList<Transaction>();
   }
+
 
   public List<Transaction> getTransactions() {
     return transactions;
@@ -49,16 +50,19 @@ public abstract class Card {
     this.owner = owner;
   }
 
-  public Boolean getValid() {
-    return isValid;
+  public Boolean getIsOurBank() {
+    return isOurBank;
   }
 
-  public void setValid(Boolean valid) {
-    isValid = valid;
+  public void setIsOurBank(Boolean IsOurBank) {
+    isOurBank = IsOurBank;
   }
 
   public Double getBalance() {
     return balance;
+  }
+  public Double getOurBalance() {
+    return isOurBank ? balance : 0;
   }
 
   public void setBalance(Double balance) {
@@ -80,9 +84,21 @@ public abstract class Card {
     transactions.add(transaction);
   }
 
+  public abstract Integer getDepositCashback();
+  public abstract Integer getWithdrawCashback();
   public abstract Integer getWithdrawCommission();
 
   public abstract Integer getDepositCommission();
 
   public abstract Integer getTransferCommission();
+
+  @Override
+  public String toString() {
+    return "Card{" +
+            "cardNumber='" + cardNumber + '\'' +
+            ", owner=" + owner +
+            ", isOurBank=" + isOurBank +
+            ", balance=" + balance +
+            '}';
+  }
 }

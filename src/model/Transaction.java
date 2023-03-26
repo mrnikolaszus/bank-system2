@@ -4,8 +4,9 @@ import javax.xml.crypto.Data;
 import java.time.LocalDateTime;
 
 public class Transaction {
-  private String id;
-  private String operationType; //TODO: add enum
+  private int id;
+  static private int counterID = 0;
+  private String operationType;
   private Double amount;
   private Client clientFrom;
   private Client clientTo;
@@ -13,8 +14,8 @@ public class Transaction {
   private String cardNumberTo;
   private LocalDateTime timestamp;
 
-  public Transaction(String id, String operationType, Double amount, Client clientFrom, Client clientTo, String cardNumberFrom, String cardNumberTo, LocalDateTime timestamp) {
-    this.id = id;
+  public Transaction(String operationType, Double amount, Client clientFrom, Client clientTo, String cardNumberFrom, String cardNumberTo, LocalDateTime timestamp) {
+    this.id = ++counterID;
     this.operationType = operationType;
     this.amount = amount;
     this.clientFrom = clientFrom;
@@ -24,21 +25,9 @@ public class Transaction {
     this.timestamp = timestamp;
   }
 
-  public String getId() {
-    return id;
-  }
 
-  public void setId(String id) {
-    this.id = id;
-  }
 
-  public String getOperationType() {
-    return operationType;
-  }
 
-  public void setOperationType(String operationType) {
-    this.operationType = operationType;
-  }
 
   public Double getAmount() {
     return amount;
@@ -86,5 +75,19 @@ public class Transaction {
 
   public void setTimestamp(LocalDateTime timestamp) {
     this.timestamp = timestamp;
+  }
+
+  @Override
+  public String toString() {
+    return "Transaction{" +
+            "id=" + id +
+            ", operationType='" + operationType + '\'' +
+            ", amount=" + amount +
+            ", clientFrom=" + clientFrom +
+            ", clientTo=" + clientTo +
+            ", cardNumberFrom='" + cardNumberFrom + '\'' +
+            ", cardNumberTo='" + cardNumberTo + '\'' +
+            ", timestamp=" + timestamp +
+            '}';
   }
 }

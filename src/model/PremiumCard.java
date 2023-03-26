@@ -4,40 +4,42 @@ import java.util.List;
 
 public class PremiumCard extends Card{
 
+  private static final Integer WITHDRAW_OUR_BANK_COMMISSION = 0;
   private static final Integer WITHDRAW_ANOTHER_BANK_COMMISSION = 0;
   private static final Integer TRANSFER_MONEY_ANOTHER_BANK_COMMISSION = 0;
   private static final Integer DEPOSIT_ANOTHER_BANK_COMMISSION = 0;
+  private static final Integer DEPOSIT_OUR_BANK_COMMISSION = 0;
 
   private static final Integer DEPOSIT_CASHBACK = 5;
   private static final Integer WITHDRAW_CASHBACK = 3;
-  private Double cashback;
+
 
   public PremiumCard(String cardNumber, Client owner,
-                     Boolean isValid, Double balance, Double cashback, List<Transaction> transactions) {
-    super(cardNumber, owner, isValid, balance, transactions);
-    this.cashback = cashback;
+                     Boolean isOurBank, Double balance) {
+    super(cardNumber, owner, isOurBank, balance);
+
   }
 
-  public Double getCashback() {
-    return cashback;
+  @Override
+  public Integer getDepositCashback() {
+    return DEPOSIT_CASHBACK;
   }
 
-  public void setCashback(Double cashback) {
-    this.cashback = cashback;
-  }
-
-  public void addCashback(Double amount){
-    //TODO implement
+  @Override
+  public Integer getWithdrawCashback() {
+    return WITHDRAW_CASHBACK;
   }
 
   @Override
   public Integer getWithdrawCommission() {
-    return WITHDRAW_ANOTHER_BANK_COMMISSION;
+
+    return this.getIsOurBank() ? WITHDRAW_OUR_BANK_COMMISSION : WITHDRAW_ANOTHER_BANK_COMMISSION;
   }
 
   @Override
   public Integer getDepositCommission() {
-    return DEPOSIT_ANOTHER_BANK_COMMISSION;
+
+    return  this.getIsOurBank() ? DEPOSIT_OUR_BANK_COMMISSION : DEPOSIT_ANOTHER_BANK_COMMISSION;
   }
 
   @Override
